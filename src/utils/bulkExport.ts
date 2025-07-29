@@ -3,154 +3,154 @@ import { generateHTMLReport } from './reportGenerator';
 import * as XLSX from 'xlsx';
 
 export function generateBulkExcel(students: Student[]): void {
-  const workbook = XLSX.utils.book_new();
-  
-  // Create summary sheet
-  const summaryData = students.map(student => ({
-    'NRIC/ID': student.id,
-    'Name': student.name,
-    'Primary School': student.primarySchool,
-    'Primary Talent': student.talent1,
-    'Secondary Talent': student.talent2 || '',
-    'Citizenship': student.citizenship,
-    'Date of Birth': student.dateOfBirth,
-    'Gender': student.sex,
-    'GEP Status': student.gepStatus || 'No',
-    'P6 Overall %': student.academics.p6.overallPercentage,
-    'P5 Overall %': student.academics.p5.overallPercentage,
-    'Main Contact': student.mainContact.name,
-    'Main Contact Mobile': student.mainContact.mobile,
-    'Main Contact Email': student.mainContact.email,
-    'Address': student.address,
-    'Postal Code': student.postalCode,
-    'NAPFA Award': student.napfa.award || '',
-    'Recommendation': student.recommendationReason || ''
-  }));
-  
-  const summarySheet = XLSX.utils.json_to_sheet(summaryData);
-  XLSX.utils.book_append_sheet(workbook, summarySheet, 'Student Summary');
-  
-  // Create detailed academic sheet
-  const academicData = students.map(student => ({
-    'NRIC/ID': student.id,
-    'Name': student.name,
-    'P6 Overall %': student.academics.p6.overallPercentage,
-    'P6 English': student.academics.p6.subjects.english.score,
-    'P6 Mathematics': student.academics.p6.subjects.maths.score,
-    'P6 Science': student.academics.p6.subjects.science.score,
-    'P6 Mother Tongue': student.academics.p6.subjects.motherTongue.score,
-    'P6 Conduct': student.academics.p6.conduct,
-    'P6 Teacher Remarks': student.academics.p6.teacherRemarks,
-    'P5 Overall %': student.academics.p5.overallPercentage,
-    'P5 English': student.academics.p5.subjects.english.score,
-    'P5 Mathematics': student.academics.p5.subjects.maths.score,
-    'P5 Science': student.academics.p5.subjects.science.score,
-    'P5 Mother Tongue': student.academics.p5.subjects.motherTongue.score,
-    'P5 Conduct': student.academics.p5.conduct,
-    'P5 Teacher Remarks': student.academics.p5.teacherRemarks
-  }));
-  
-  const academicSheet = XLSX.utils.json_to_sheet(academicData);
-  XLSX.utils.book_append_sheet(workbook, academicSheet, 'Academic Records');
-  
-  // Create CCA activities sheet
-  const ccaData: any[] = [];
-  students.forEach(student => {
-    student.ccaActivities.forEach(cca => {
-      ccaData.push({
-        'NRIC/ID': student.id,
+    const workbook = XLSX.utils.book_new();
+
+    // Create summary sheet
+    const summaryData = students.map(student => ({
+        'NRIC/ID (Masked)': student.id,
         'Name': student.name,
-        'Year': cca.year,
-        'CCA Name': cca.name,
-        'Event': cca.event,
-        'Involvement': cca.involvement
-      });
-    });
-  });
-  
-  if (ccaData.length > 0) {
-    const ccaSheet = XLSX.utils.json_to_sheet(ccaData);
-    XLSX.utils.book_append_sheet(workbook, ccaSheet, 'CCA Activities');
-  }
-  
-  // Create VIA activities sheet
-  const viaData: any[] = [];
-  students.forEach(student => {
-    student.viaActivities.forEach(via => {
-      viaData.push({
-        'NRIC/ID': student.id,
+        'Primary School': student.primarySchool,
+        'Primary Talent': student.talent1,
+        'Secondary Talent': student.talent2 || '',
+        'Citizenship': student.citizenship,
+        'Date of Birth': student.dateOfBirth,
+        'Gender': student.sex,
+        'GEP Status': student.gepStatus || 'No',
+        'P6 Overall %': student.academics.p6.overallPercentage,
+        'P5 Overall %': student.academics.p5.overallPercentage,
+        'Main Contact': student.mainContact.name,
+        'Main Contact Mobile': student.mainContact.mobile,
+        'Main Contact Email': student.mainContact.email,
+        'Address': student.address,
+        'Postal Code': student.postalCode,
+        'NAPFA Award': student.napfa.award || '',
+        'Recommendation': student.recommendationReason || ''
+    }));
+
+    const summarySheet = XLSX.utils.json_to_sheet(summaryData);
+    XLSX.utils.book_append_sheet(workbook, summarySheet, 'Student Summary');
+
+    // Create detailed academic sheet
+    const academicData = students.map(student => ({
+        'NRIC/ID (Masked)': student.id,
         'Name': student.name,
-        'Year': via.year,
-        'VIA Activity': via.name,
-        'Partner': via.partner
-      });
+        'P6 Overall %': student.academics.p6.overallPercentage,
+        'P6 English': student.academics.p6.subjects.english.score,
+        'P6 Mathematics': student.academics.p6.subjects.maths.score,
+        'P6 Science': student.academics.p6.subjects.science.score,
+        'P6 Mother Tongue': student.academics.p6.subjects.motherTongue.score,
+        'P6 Conduct': student.academics.p6.conduct,
+        'P6 Teacher Remarks': student.academics.p6.teacherRemarks,
+        'P5 Overall %': student.academics.p5.overallPercentage,
+        'P5 English': student.academics.p5.subjects.english.score,
+        'P5 Mathematics': student.academics.p5.subjects.maths.score,
+        'P5 Science': student.academics.p5.subjects.science.score,
+        'P5 Mother Tongue': student.academics.p5.subjects.motherTongue.score,
+        'P5 Conduct': student.academics.p5.conduct,
+        'P5 Teacher Remarks': student.academics.p5.teacherRemarks
+    }));
+
+    const academicSheet = XLSX.utils.json_to_sheet(academicData);
+    XLSX.utils.book_append_sheet(workbook, academicSheet, 'Academic Records');
+
+    // Create CCA activities sheet
+    const ccaData: any[] = [];
+    students.forEach(student => {
+        student.ccaActivities.forEach(cca => {
+            ccaData.push({
+                'NRIC/ID (Masked)': student.id,
+                'Name': student.name,
+                'Year': cca.year,
+                'CCA Name': cca.name,
+                'Event': cca.event,
+                'Involvement': cca.involvement
+            });
+        });
     });
-  });
-  
-  if (viaData.length > 0) {
-    const viaSheet = XLSX.utils.json_to_sheet(viaData);
-    XLSX.utils.book_append_sheet(workbook, viaSheet, 'VIA Activities');
-  }
-  
-  // Create awards sheet
-  const awardsData: any[] = [];
-  students.forEach(student => {
-    student.awards.forEach(award => {
-      awardsData.push({
-        'NRIC/ID': student.id,
+
+    if (ccaData.length > 0) {
+        const ccaSheet = XLSX.utils.json_to_sheet(ccaData);
+        XLSX.utils.book_append_sheet(workbook, ccaSheet, 'CCA Activities');
+    }
+
+    // Create VIA activities sheet
+    const viaData: any[] = [];
+    students.forEach(student => {
+        student.viaActivities.forEach(via => {
+            viaData.push({
+                'NRIC/ID (Masked)': student.id,
+                'Name': student.name,
+                'Year': via.year,
+                'VIA Activity': via.name,
+                'Partner': via.partner
+            });
+        });
+    });
+
+    if (viaData.length > 0) {
+        const viaSheet = XLSX.utils.json_to_sheet(viaData);
+        XLSX.utils.book_append_sheet(workbook, viaSheet, 'VIA Activities');
+    }
+
+    // Create awards sheet
+    const awardsData: any[] = [];
+    students.forEach(student => {
+        student.awards.forEach(award => {
+            awardsData.push({
+                'NRIC/ID (Masked)': student.id,
+                'Name': student.name,
+                'Year': award.year,
+                'Award': award.name
+            });
+        });
+
+        student.nonSchoolAwards.forEach(award => {
+            awardsData.push({
+                'NRIC/ID (Masked)': student.id,
+                'Name': student.name,
+                'Year': 'N/A',
+                'Award': award
+            });
+        });
+    });
+
+    if (awardsData.length > 0) {
+        const awardsSheet = XLSX.utils.json_to_sheet(awardsData);
+        XLSX.utils.book_append_sheet(workbook, awardsSheet, 'Awards');
+    }
+
+    // Create NAPFA sheet
+    const napfaData = students.map(student => ({
+        'NRIC/ID (Masked)': student.id,
         'Name': student.name,
-        'Year': award.year,
-        'Award': award.name
-      });
-    });
-    
-    student.nonSchoolAwards.forEach(award => {
-      awardsData.push({
-        'NRIC/ID': student.id,
-        'Name': student.name,
-        'Year': 'N/A',
-        'Award': award
-      });
-    });
-  });
-  
-  if (awardsData.length > 0) {
-    const awardsSheet = XLSX.utils.json_to_sheet(awardsData);
-    XLSX.utils.book_append_sheet(workbook, awardsSheet, 'Awards');
-  }
-  
-  // Create NAPFA sheet
-  const napfaData = students.map(student => ({
-    'NRIC/ID': student.id,
-    'Name': student.name,
-    'Year': student.napfa.year,
-    'Height (cm)': student.napfa.height,
-    'Weight (kg)': student.napfa.weight,
-    'Sit-up Score': student.napfa.sitUp.score,
-    'Sit-up Band': student.napfa.sitUp.band,
-    'Standing Broad Jump Score': student.napfa.standingBroadJump.score,
-    'Standing Broad Jump Band': student.napfa.standingBroadJump.band,
-    'Sit & Reach Score': student.napfa.sitAndReach.score,
-    'Sit & Reach Band': student.napfa.sitAndReach.band,
-    'Pull-up Score': student.napfa.pullUp.score,
-    'Pull-up Band': student.napfa.pullUp.band,
-    'Shuttle Run Score': student.napfa.shuttleRun.score,
-    'Shuttle Run Band': student.napfa.shuttleRun.band,
-    'Run Score': student.napfa.run.score,
-    'Run Band': student.napfa.run.band,
-    'Award': student.napfa.award
-  }));
-  
-  const napfaSheet = XLSX.utils.json_to_sheet(napfaData);
-  XLSX.utils.book_append_sheet(workbook, napfaSheet, 'NAPFA Results');
-  
-  // Download the file
-  const fileName = `Student_Reports_${new Date().toISOString().split('T')[0]}.xlsx`;
-  XLSX.writeFile(workbook, fileName);
+        'Year': student.napfa.year,
+        'Height (cm)': student.napfa.height,
+        'Weight (kg)': student.napfa.weight,
+        'Sit-up Score': student.napfa.sitUp.score,
+        'Sit-up Band': student.napfa.sitUp.band,
+        'Standing Broad Jump Score': student.napfa.standingBroadJump.score,
+        'Standing Broad Jump Band': student.napfa.standingBroadJump.band,
+        'Sit & Reach Score': student.napfa.sitAndReach.score,
+        'Sit & Reach Band': student.napfa.sitAndReach.band,
+        'Pull-up Score': student.napfa.pullUp.score,
+        'Pull-up Band': student.napfa.pullUp.band,
+        'Shuttle Run Score': student.napfa.shuttleRun.score,
+        'Shuttle Run Band': student.napfa.shuttleRun.band,
+        'Run Score': student.napfa.run.score,
+        'Run Band': student.napfa.run.band,
+        'Award': student.napfa.award
+    }));
+
+    const napfaSheet = XLSX.utils.json_to_sheet(napfaData);
+    XLSX.utils.book_append_sheet(workbook, napfaSheet, 'NAPFA Results');
+
+    // Download the file
+    const fileName = `Student_Reports_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(workbook, fileName);
 }
 
 export function generateBulkHTML(students: Student[]): void {
-  const consolidatedHTML = `
+    const consolidatedHTML = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -315,8 +315,8 @@ export function generateBulkHTML(students: Student[]): void {
                     <h3 class="section-title">Basic Information</h3>
                     <div class="info-grid">
                         <div class="info-item">
-                            <div class="info-label">NRIC/ID</div>
-                            <div class="info-value">${student.id}</div>
+                            <div class="info-label">NRIC/ID <span style="font-size: 0.8em; color: #6b7280;">(masked for privacy)</span></div>
+                            <div class="info-value" style="font-family: monospace;">${student.id}</div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">Date of Birth</div>
@@ -462,20 +462,20 @@ export function generateBulkHTML(students: Student[]): void {
 </body>
 </html>
   `;
-  
-  const blob = new Blob([consolidatedHTML], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `Consolidated_Student_Reports_${new Date().toISOString().split('T')[0]}.html`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+
+    const blob = new Blob([consolidatedHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Consolidated_Student_Reports_${new Date().toISOString().split('T')[0]}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 export function generateBulkPDF(students: Student[]): void {
-  const consolidatedHTML = `
+    const consolidatedHTML = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -755,15 +755,15 @@ export function generateBulkPDF(students: Student[]): void {
 </body>
 </html>
   `;
-  
-  const printWindow = window.open('', '_blank');
-  if (printWindow) {
-    printWindow.document.write(consolidatedHTML);
-    printWindow.document.close();
-    printWindow.focus();
-    
-    setTimeout(() => {
-      printWindow.print();
-    }, 1000);
-  }
+
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+        printWindow.document.write(consolidatedHTML);
+        printWindow.document.close();
+        printWindow.focus();
+
+        setTimeout(() => {
+            printWindow.print();
+        }, 1000);
+    }
 }
