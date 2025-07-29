@@ -1,16 +1,42 @@
 import { Student } from '../types/Student';
 
+// Function to mask NRIC/ID
+function maskNRIC(nric: string): string {
+  if (!nric || nric.trim() === '') return 'N/A';
+
+  // If it's already masked, return as is
+  if (nric.includes('*')) return nric;
+
+  // For NRIC format like T1234567X, mask to T****567X
+  if (nric.length >= 9) {
+    const prefix = nric.substring(0, 1);
+    const suffix = nric.substring(nric.length - 4);
+    return `${prefix}****${suffix}`;
+  }
+
+  // For other formats, mask all but first and last character
+  if (nric.length > 2) {
+    const first = nric.substring(0, 1);
+    const last = nric.substring(nric.length - 1);
+    const middle = '*'.repeat(nric.length - 2);
+    return `${first}${middle}${last}`;
+  }
+
+  // For very short IDs, just return asterisks
+  return '*'.repeat(nric.length);
+}
+
 export function parseCSV(csvContent: string): Student[] {
   const lines = csvContent.split('\n');
-  
+
   // Skip header lines (first 3 lines are metadata, 4th is column headers)
   const dataLines = lines.slice(4).filter(line => line.trim() && !line.startsWith('#'));
-  
+
   return dataLines.map((line, index) => {
     const columns = parseCSVLine(line);
-    
+
     return {
-      id: columns[0] || `student-${index}`,
+      id: maskNRIC(columns[0] || `student-${index}`),
       name: columns[1] || 'Unknown',
       primarySchool: columns[2] || '',
       talent1: columns[3] || '',
@@ -101,10 +127,10 @@ function parseCSVLine(line: string): string[] {
   const result: string[] = [];
   let current = '';
   let inQuotes = false;
-  
+
   for (let i = 0; i < line.length; i++) {
     const char = line[i];
-    
+
     if (char === '"') {
       inQuotes = !inQuotes;
     } else if (char === ',' && !inQuotes) {
@@ -114,7 +140,7 @@ function parseCSVLine(line: string): string[] {
       current += char;
     }
   }
-  
+
   result.push(current.trim());
   return result;
 }

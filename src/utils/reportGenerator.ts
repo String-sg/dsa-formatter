@@ -1,20 +1,20 @@
 import { Student } from '../types/Student';
 
 export function generateHTMLReport(student: Student): string {
-  const formatDate = (dateStr: string) => {
-    if (!dateStr) return 'N/A';
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-GB');
-  };
+    const formatDate = (dateStr: string) => {
+        if (!dateStr) return 'N/A';
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-GB');
+    };
 
-  const getGradeColor = (score: number) => {
-    if (score >= 80) return '#10b981';
-    if (score >= 70) return '#3b82f6';
-    if (score >= 60) return '#f59e0b';
-    return '#ef4444';
-  };
+    const getGradeColor = (score: number) => {
+        if (score >= 80) return '#10b981';
+        if (score >= 70) return '#3b82f6';
+        if (score >= 60) return '#f59e0b';
+        return '#ef4444';
+    };
 
-  return `
+    return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -245,8 +245,8 @@ export function generateHTMLReport(student: Student): string {
             <h2 class="section-title">Basic Information</h2>
             <div class="info-grid">
                 <div class="info-item">
-                    <div class="info-label">NRIC/ID</div>
-                    <div class="info-value">${student.id}</div>
+                    <div class="info-label">NRIC/ID <span style="font-size: 0.8em; color: #6b7280;">(masked for privacy)</span></div>
+                    <div class="info-value" style="font-family: monospace;">${student.id}</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Primary School</div>
@@ -517,28 +517,28 @@ export function generateHTMLReport(student: Student): string {
 }
 
 export function downloadHTML(content: string, filename: string) {
-  const blob = new Blob([content], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+    const blob = new Blob([content], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 export function generatePDF(student: Student) {
-  const htmlContent = generateHTMLReport(student);
-  const printWindow = window.open('', '_blank');
-  if (printWindow) {
-    printWindow.document.write(htmlContent);
-    printWindow.document.close();
-    printWindow.focus();
-    
-    // Wait for content to load before printing
-    setTimeout(() => {
-      printWindow.print();
-    }, 1000);
-  }
+    const htmlContent = generateHTMLReport(student);
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+        printWindow.document.write(htmlContent);
+        printWindow.document.close();
+        printWindow.focus();
+
+        // Wait for content to load before printing
+        setTimeout(() => {
+            printWindow.print();
+        }, 1000);
+    }
 }
