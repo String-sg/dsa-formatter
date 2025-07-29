@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileUpload } from './components/FileUpload';
 import { SearchFilters } from './components/SearchFilters';
 import { StudentList } from './components/StudentList';
@@ -145,12 +145,7 @@ function App() {
                 Upload your CSV file to generate comprehensive,
                 professional reports that are easy to read and share
               </p>
-              {/* Font test section */}
-              <div className="mt-4 p-4 border rounded-lg bg-gray-50 dark:bg-gray-800">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Font Test:</p>
-                <p className="font-title text-lg mb-1">Space Grotesk (Title Font)</p>
-                <p className="font-body text-sm">Montserrat (Body Font)</p>
-              </div>
+
             </div>
             <FileUpload onFileUpload={handleFileUpload} />
             <div className="mt-8 text-center">
