@@ -103,12 +103,12 @@ export function StudentReport({ student, onGeneratePDF, onGenerateHTML, isDarkMo
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 bg-primary/20 rounded-lg">
-              <label className="text-sm font-medium text-primary font-body">Primary Talent</label>
+              <label className={`text-sm font-medium font-body ${isDarkMode ? 'text-primary' : 'text-black'}`}>Primary Talent</label>
               <p className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold font-body`}>{student.talent1}</p>
             </div>
             {student.talent2 && (
               <div className="p-4 bg-secondary/20 rounded-lg">
-                <label className="text-sm font-medium text-secondary font-body">Secondary Talent</label>
+                <label className={`text-sm font-medium font-body ${isDarkMode ? 'text-secondary' : 'text-black'}`}>Secondary Talent</label>
                 <p className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold font-body`}>{student.talent2}</p>
               </div>
             )}
@@ -120,7 +120,7 @@ export function StudentReport({ student, onGeneratePDF, onGenerateHTML, isDarkMo
           <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4 pb-2 border-b ${isDarkMode ? 'border-gray-600' : 'border-gray-200'} font-title`}>
             Academic Performance
           </h2>
-          
+
           {/* P6 Results */}
           <div className="mb-6">
             <h3 className={`text-lg font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-3 font-title`}>Primary 6 (2025)</h3>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FileUpload } from './components/FileUpload';
 import { SearchFilters } from './components/SearchFilters';
 import { StudentList } from './components/StudentList';
