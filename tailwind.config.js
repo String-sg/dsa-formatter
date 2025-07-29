@@ -9,8 +9,8 @@ export default {
         background: '#33373B',
       },
       fontFamily: {
-        'title': ['Space Grotesk', 'sans-serif'],
-        'body': ['Montserrat', 'sans-serif'],
+        'title': ['Space Grotesk', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],
+        'body': ['Montserrat', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],
       },
     },
   },
